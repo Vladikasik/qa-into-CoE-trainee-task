@@ -15,6 +15,7 @@ class First_task:
 		# data variables
 		self.json_from_testcase = None
 		self.json_from_values = None
+		self.values_dict = {}
 
 	def _get_all_data(self):
 
@@ -24,8 +25,26 @@ class First_task:
 		with open(self.values_filename, 'r') as file:
 			self.json_from_values = json.load(file)
 
+	def transform(self):
+		self._prepairing()
+
+		for i in self.json_from_testcase["params"]:
+			# print(i)
+			print()
+
+	def _prepairing(self):
+		self._get_all_data()
+		print('data_imported')
+		self._values_to_dict()
+		print('values to dict done')
+
+	def _values_to_dict(self):
+		for i in self.json_from_values["values"]:
+			self.values_dict[i['id']] = i['value']
+
+		print()
 
 
 
 test = First_task()
-test._get_all_data()
+test.transform()
