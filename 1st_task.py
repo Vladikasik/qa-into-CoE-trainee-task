@@ -14,19 +14,16 @@ class First_task:
 
 		# data variables
 		self.json_from_testcase = None
+		self.json_from_values = None
 
 	def _get_all_data(self):
 
-		self._read_json(self.testcase_filename, self.json_from_testcase)
+		with open(self.testcase_filename, 'r') as file:
+			self.json_from_testcase = json.load(file)
 
-		print(self.json_from_testcase)
+		with open(self.values_filename, 'r') as file:
+			self.json_from_values = json.load(file)
 
-	def _read_json(self, filename, var_to_write):
-
-		with open(filename, 'r') as file:
-
-			print(json.load(file))
-			#var_to_write = json.load(file)
 
 
 
