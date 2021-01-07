@@ -1,50 +1,58 @@
 import json
 
-class First_task:
 
-	def __init__(self):
+class FirstTask:
 
-		# filenames
-		self.testcase_filename = "TestcaseStructure.json"
-		self.values_filename = "Values.json"
+    def __init__(self):
 
-		self.error_filename = "error.json"
+        # filenames
+        self.testcase_filename = "TestcaseStructure.json"
+        self.values_filename = "Values.json"
 
-		self.result_filename = "result/StructureWithValues.json"
+        self.error_filename = "error.json"
 
-		# data variables
-		self.json_from_testcase = None
-		self.json_from_values = None
-		self.values_dict = {}
+        self.result_filename = "result/StructureWithValues.json"
 
-	def _get_all_data(self):
+        # data variables
+        self.json_from_testcase = None
+        self.json_from_values = None
+        self.values_dict = {}
 
-		with open(self.testcase_filename, 'r') as file:
-			self.json_from_testcase = json.load(file)
+        self.result = {}
 
-		with open(self.values_filename, 'r') as file:
-			self.json_from_values = json.load(file)
+    def _get_all_data(self):
 
-	def transform(self):
-		self._prepairing()
+        with open(self.testcase_filename, 'r', encoding='utf-8') as file:
+            self.json_from_testcase = json.load(file)
 
-		for i in self.json_from_testcase["params"]:
-			# print(i)
-			print()
+        with open(self.values_filename, 'r', encoding='utf-8') as file:
+            self.json_from_values = json.load(file)
 
-	def _prepairing(self):
-		self._get_all_data()
-		print('data_imported')
-		self._values_to_dict()
-		print('values to dict done')
+    def transform(self):
+        self._prepairing()
 
-	def _values_to_dict(self):
-		for i in self.json_from_values["values"]:
-			self.values_dict[i['id']] = i['value']
+        for i in self.json_from_testcase["params"]:
+            index_to_insert = self.json_from_testcase["params"].index(i)
+            if "values" in i.keys():
+                pass
+            else:
+                self.result["params"][index_to_insert]["value"] = self.values_dict[i['id']]
+                print('edit')
 
-		print()
+        print(self.result)
+
+    def _prepairing(self):
+        self._get_all_data()
+        print('data_imported')
+        self._values_to_dict()
+        print('values to dict done')
+        self.result = self.json_from_testcase
+
+    def _values_to_dict(self):
+
+        for i in self.json_from_values["values"]:
+            self.values_dict[i['id']] = i['value']
 
 
-
-test = First_task()
+test = FirstTask()
 test.transform()
