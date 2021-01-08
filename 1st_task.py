@@ -31,12 +31,18 @@ class FirstTask:
     def transform(self):
         self._prepairing()
 
-        for i in self.json_from_testcase["params"]:
-            index_to_insert = self.json_from_testcase["params"].index(i)
-            if "values" in i.keys():
-                pass
+        for el in self.json_from_testcase["params"]:
+            index_to_insert = self.json_from_testcase["params"].index(el)
+            if "values" in el.keys():
+                for val in el["values"]:
+                    print(self.values_dict[el["id"]])
+                    print(list(val.values()))
+                    print(self.values_dict[el["id"]] in list(val.values()))
+                    if self.values_dict[el["id"]] in val.keys():
+                        print('heey')
+                        print(val)
             else:
-                self.result["params"][index_to_insert]["value"] = self.values_dict[i['id']]
+                self.result["params"][index_to_insert]["value"] = self.values_dict[el['id']]
                 print('edit')
 
         print(self.result)
