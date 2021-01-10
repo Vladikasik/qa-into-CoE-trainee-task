@@ -4,6 +4,7 @@ import json
 class FirstTask:
 
     def __init__(self):
+        print('task init')
 
         # filenames
         self.testcase_filename = "TestcaseStructure.json"
@@ -35,17 +36,15 @@ class FirstTask:
             index_to_insert = self.json_from_testcase["params"].index(el)
             if "values" in el.keys():
                 for val in el["values"]:
-                    print(self.values_dict[el["id"]])
-                    print(list(val.values()))
-                    print(self.values_dict[el["id"]] in list(val.values()))
-                    if self.values_dict[el["id"]] in val.keys():
-                        print('heey')
-                        print(val)
+                    if self.values_dict[el["id"]] in list(val.values()):
+                        value_to_insert = None
+                        for title in el["values"]:
+                            if title["id"] == self.values_dict[el["id"]]:
+                                value_to_insert = title["title"]
+                                break
+                        self.result['params'][index_to_insert]["value"] = value_to_insert
             else:
                 self.result["params"][index_to_insert]["value"] = self.values_dict[el['id']]
-                print('edit')
-
-        print(self.result)
 
     def _prepairing(self):
         self._get_all_data()
@@ -62,3 +61,4 @@ class FirstTask:
 
 test = FirstTask()
 test.transform()
+print(test.result)
